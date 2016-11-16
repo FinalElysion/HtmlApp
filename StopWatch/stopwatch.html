@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>stop watch</title>
+    <script type="text/javascript">
+        //执行开始
+        var BEGIN = 'BEGIN';
+        //运行状态
+        var RUN = 'RUN';
+        //执行添加新计次值
+        var ADD_NEW_VALUE = 'ADD NEW VALUE';
+        //执行停止
+        var STOP ='STOP';
+        //已经停止运行
+        var STOPED ='STOPED';
+
+        //起始计时时间
+        var totalStartTime = null;
+        var countStartTime = null;
+        
+        //暂停时的累积的时间
+        var countDuration = 0;
+        var totalDuration = 0;
+
+        //保存的计次时间列表
+        var countList = [];
+
+        //循环指针
+        var changeTime = null;
+        var runType = STOPED;
+
+        //label & 缓存当前已经使用的时间
+        var countTime = null;
+        var totalTime = null;
+
+        beginChange = function(){
+            //设置标志位进行控制,避免多线程造成的变量问题
+            runType = BEGIN;         
+            changeTime = setInterval(changeStopWatch,10);
+        }
+
+        stopChange = function(){
+            runType = STOP;
+        }
+
+        addNewValue = function (){
+            //缓存添加的时间
+            var newValue = countTime;
+            countList.push(newValue);
+
+            //设置标志位进行控制,避免多线程造成的变量问题
+            runType = ADD_NEW_VALUE;
+            
+            //添加新的值到页面
+            setNewValue(newValue);
+            //刷新页面的平均值
+            changeAverage();
+        }
+
+        resetStopWatch = function(){
+            //把所有值设为默认值
+            totalStartTime = null;
+            countStartTime = null; 
+            countDuration = null;
+            totalDuration = null;
+            countList = [];
+            changeTime = null;
+   
+            runType = STOPED;
+
+            setCountTime(0);
+            setTotalTime(0);
+
+            document.getElementById('result').innerHTML = "";
+            document.getElementById('average').innerText = "00:00:00.00";
+            document.getElementById('result-second').innerHTML = "";
+            document.getElementById('average-second').innerText = "0";
+        }
+        /**
+         * 计时器核心方法
+         */
+        changeStopWatch = function(){
+            if(BEGIN == runType){
+                totalStartTime = new Date();
+                countStartTime = new Date();
+                //重设按钮状态
+                document.getElementById('begin').disabled = true;
+                document.getElementById('stop').disabled = false;
+                document.getElementById('commit').disabled = false;
+                document.getElementById('reset').disabled = true;
+                runType = RUN;
+            }else if(ADD_NEW_VALUE == runType){
+                //重设新的起始时间 暂停的时间点
+                countStartTime = new Date();
+                countDuration = 0;
+                runType = RUN;
+            }else if(STOP == runType){
+                clearInterval(changeTime);
+
+                countDuration = countTime;
+                totalDuration = totalTime;
+                //重设按钮状态
+                document.getElementById('begin').disabled = false;
+                document.getElementById('stop').disabled = true;
+                document.getElementById('commit').disabled = true;
+                document.getElementById('reset').disabled = false;
+                
+                runType = STOPED;
+                return;
+            }else if(STOPED == runType){
+                return;
+            }
+
+            var now = new Date();
+            var tempTotal = (now.getTime() - totalStartTime.getTime())/1000 + totalDuration;
+            var tempCount = (now.getTime() - countStartTime.getTime())/1000 + countDuration;
+            tempTotal = Math.floor(tempTotal * 100) / 100;
+            tempCount = Math.floor(tempCount * 100) / 100;
+            //检查计算值是否有问题
+            if(tempTotal < 0 || tempCount < 0){
+                console.log('error');
+                return;
+            }
+            setTotalTime(tempTotal);
+            setCountTime(tempCount);
+            
+        }
+
+        
+        //时间值的格式转换
+        function secondToTime(time) {
+            var result = "";
+            if (null != time && "" != time && time > 0) {
+                //hour
+                if (time >= 60 * 60) {
+                    result = parseInt(time / 3600);
+                    if(result< 10){
+                        result = "0" + result + ":";
+                    }else{
+                        result = result + ":"
+                    }
+                }else{
+                    result = "00:"
+                }
+
+                //min
+                if (time >= 60) {
+                    var tempMin = parseInt((time - parseInt(time / 3600) * 3600 )/ 60) ;
+                    if(tempMin < 10){
+                        tempMin = "0" + tempMin + ":";
+                    }else{
+                        tempMin = tempMin + ":"
+                    }
+                    result = result + tempMin;
+                }else{
+                    result = result + "00:";
+                }
+
+                //second
+                
+                var timeStr = time + "";
+                var tempSecond = parseInt(time%60);
+                
+                if(tempSecond < 10){
+                    tempSecond = "0" + tempSecond;
+                }
+                if(timeStr.indexOf(".") >= 0){
+                    tempSecond = tempSecond + timeStr.substring(timeStr.indexOf("."),timeStr.length);
+                }
+                result = result + tempSecond;
+                
+            }else{
+                result = "00:00:00.00";
+            }
+            return result;
+        }
+
+        getCountTime = function(){
+            return document.getElementById('count-Time');
+        }
+
+        setCountTime = function(value){
+            countTime = value;
+            document.getElementById('count-second-Time').innerText = value;
+            document.getElementById('count-Time').innerText = secondToTime(value);
+        }
+
+        getTotalTime = function(){
+            return document.getElementById('total-Time');
+        }
+
+        setTotalTime = function(value){
+            totalTime = value;
+
+            document.getElementById('total-Time').innerText = secondToTime(value);
+            document.getElementById('total-second-Time').innerText = value;
+            
+        }
+
+        setNewValue = function(value){
+            var newNode = document.createElement("div");
+            newNode.innerHTML = secondToTime(value);
+           
+            var oldNode = document.getElementById('result');
+            oldNode.appendChild(newNode);
+
+            var newNode2 = document.createElement("div");
+            newNode2.innerHTML = value;
+            
+            var oldNode2 = document.getElementById('result-second');
+            oldNode2.appendChild(newNode2);
+        }
+
+        changeAverage = function(){
+            var total = 0,
+                i = 0;
+            for(;i<countList.length; i++){
+                total = total +countList[i];
+            }
+            var result = Math.floor(total/i * 100) / 100;
+            document.getElementById('average').innerText = secondToTime(result);
+            document.getElementById('average-second').innerText = result;
+        }
+       
+
+    </script>
+  </head>
+
+  <body >
+    <div style="width: 430px;border-width: 2px;border-style: solid;padding: 10px 10px 10px 10px;">
+        <input type="button" id ="begin" value="启动" onclick="beginChange()"/>
+        <input type="button" id = "stop" value="停止" disabled="true" onclick="stopChange()"/>
+        <input type="button" id = "commit" value="计次"  disabled="true" onclick="addNewValue()"/>
+        <input type="button" id = "reset" value="重置"  disabled="true" onclick="resetStopWatch()"/>
+        <br />
+
+        <div style="width:200px;margin-top:10px;" >
+            <div style="padding-top:20px;">当前次数计时</div>
+            <div id="count-Time" >
+                00:00:00.00
+            </div>
+            <div style="padding-top:20px;">总时间计时</div>
+            <div id="total-Time" >
+                00:00:00.00
+            </div>
+            <div style="padding-top:20px;">
+                <div>平均值</div>
+                <div id ="average" >00:00:00.00</div>  
+            </div>  
+        </div>
+ 
+        <div style="width: 200px;position: absolute;left: 300px;top: 50px;" >
+            <div style="padding-top:20px;">当前次数计时(秒)</div>
+            <div id="count-second-Time">
+                0
+            </div>
+           
+            <div style="padding-top:20px;">总时间计时(秒)</div>
+            <div id="total-second-Time">
+                0
+            </div>
+            <div style="padding-top:20px;">
+                <div>平均值(秒)</div>
+                <div id ="average-second" >0</div>  
+            </div>
+        </div>
+    </div>
+
+    <div style="width:200px;margin-top:21px;">
+        添加的次数列表
+        <div id="result"  >
+            
+        </div>
+    </div>
+    
+    
+    <div style="width: 200px;position: absolute;left: 300px;top:253px;">
+        添加的次数列表(秒)
+        <div id="result-second"  >
+            
+        </div>
+    </div>
+    
+  </body>
+</html>
