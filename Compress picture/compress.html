@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>compress pic to base64</title>
+ 
+    <script type="text/javascript">
+    	function uploadBtnClick(){
+    		var scope = this;
+    		// change pic to base64
+			if(window.File && window.FileReader && window.FileList && window.Blob){	
+				//For Ext :
+				//var filefield = me.down('filefield'),
+				//	  file = filefield.fileInputEl.dom.files[0];	
+				var filefield = document.getElementById('fileToUpload'),
+					file = filefield.files[0];
+					
+				var compressValue = document.getElementById('compressValue');
+				processfile(file,compressValue,uploadCompressFile,scope);
+			}else{
+				alert("Upload picture is not fully supported in this browser");
+			}
+
+    	}
+
+
+		function processfile(file,compressValue,uploadCompressFile,scope) {
+			var reader = new FileReader();
+			reader.onload = function (event) {
+				var blob = new Blob([event.target.result]); 
+				
+				window.URL = window.URL || window.webkitURL;
+				var blobURL = window.URL.createObjectURL(blob); 
+				
+				var image = new Image();
+				image.src = blobURL;
+				image.onload = function() {
+					var resized = resizeMe(image); 
+					compressValue.value = resized;
+					uploadCompressFile.apply(scope);
+				}
+			};
+			reader.readAsArrayBuffer(file);
+		}
+
+		function resizeMe(img) {
+			//压缩的大小
+			var max_width =1024; 
+			var max_height =768; 
+
+			var canvas = document.createElement('canvas');
+			var width = img.width;
+			var height = img.height;
+
+			if(width > height) {
+				if(width > max_width) {
+					height = Math.round(height *= max_width / width);
+					width = max_width;
+				}
+			} 
+			else{
+				if(height > max_height) {
+					width = Math.round(width *= max_height / height);
+					height = max_height;
+				}
+			}
+		  
+			canvas.width = width;
+			canvas.height = height;
+		  
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(img, 0, 0, width, height);
+		  	//压缩率
+			return canvas.toDataURL("image/jpeg",0.7); 
+		}
+
+		// call back 
+    	function uploadCompressFile(){
+    		//do ajax upload
+    		document.getElementById('displayValue').innerHTML  = document.getElementById('compressValue').value;
+    	}
+    </script>
+
+   
+  </head>
+
+  	<body >
+ 	 	<input type="file" name="fileToUpload" id="fileToUpload"/> <br />
+ 	 	<input type="text" name="compressValue" id="compressValue" style="display:none;" /><br/>
+ 	  	<input type="button" onclick="uploadBtnClick()" value="上存" /><br/>
+ 	  	<div id='displayValue' style="word-spacing: normal;word-wrap: break-word;"></div>
+
+  	</body>
+</html>
+
