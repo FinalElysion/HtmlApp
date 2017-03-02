@@ -1,0 +1,31 @@
+.content{
+	background-color: grey;
+	height: 100px;
+
+
+	width: 200px;
+
+
+	margin-top: 15px;
+}
+
+.h_v_center{
+	width: 100px;
+
+	background-color: pink;
+
+	position: relative;
+	top: 50%;
+
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+}
+
+.h_center{
+	background-color: pink;
+
+	width: 100px;
+	
+	margin: auto;
+}
