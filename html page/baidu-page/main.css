@@ -19,50 +19,50 @@ html,body{
 
 	padding-top: 150px;
 	clear: both;
-    text-align: center;
-    white-space: nowrap;/*不自动换行*/
+	text-align: center;
+	white-space: nowrap;/*不自动换行*/
 } 
 
 .footer{
 	position:absolute;
 	bottom:0px;
 	height:190px;/*footer的高度*/
-	
+
 	width:100%;
 	text-align: center;
 } 
 
 .bdimg{
-    text-align: center;
+	text-align: center;
 }
 
 input[name="search"]{
 	margin: 0 auto;
-    width: 550px;
-    margin-top: 50px;
-    height: 30px;
+	width: 550px;
+	margin-top: 50px;
+	height: 30px;
 }
 
 .w2img{
-	 margin-bottom: 50px;
+	margin-bottom: 50px;
 }
 
 input[name="btn"]{
 	width: 70px;
-    height: 36px;
-    background: #317ef3;
-    border: none;
-    margin-left: -8px;
-    color: white;
+	height: 36px;
+	background: #317ef3;
+	border: none;
+	margin-left: -8px;
+	color: white;
 }
 
 input[name="btn"]:hover{
-    background: #2a78ef;
+	background: #2a78ef;
 }
 
 a {
-    color: grey;
-    padding: 10px;
+	color: grey;
+	padding: 10px;
 }
 
 .header a{
