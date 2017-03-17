@@ -1,0 +1,72 @@
+html,body{
+	margin:0;
+	padding:0;
+	height:100%;
+} 
+.container{
+	min-height:100%;
+	height:auto !important;
+	position:relative;
+} 
+
+.header{
+	float: right;
+	padding-top: 10px
+}
+
+.main{
+	padding-bottom:190px;/*padding等于footer的高度*/
+
+	padding-top: 150px;
+	clear: both;
+    text-align: center;
+    white-space: nowrap;/*不自动换行*/
+} 
+
+.footer{
+	position:absolute;
+	bottom:0px;
+	height:190px;/*footer的高度*/
+	
+	width:100%;
+	text-align: center;
+} 
+
+.bdimg{
+    text-align: center;
+}
+
+input[name="search"]{
+	margin: 0 auto;
+    width: 550px;
+    margin-top: 50px;
+    height: 30px;
+}
+
+.w2img{
+	 margin-bottom: 50px;
+}
+
+input[name="btn"]{
+	width: 70px;
+    height: 36px;
+    background: #317ef3;
+    border: none;
+    margin-left: -8px;
+    color: white;
+}
+
+input[name="btn"]:hover{
+    background: #2a78ef;
+}
+
+a {
+    color: grey;
+    padding: 10px;
+}
+
+.header a{
+	color: black;
+	font-weight: bold;
+	padding: 5px;
+}
