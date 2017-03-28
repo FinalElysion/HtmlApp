@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>bd test</title>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li>主页</li>
+					<li>图片</li>
+					<li>文章</li>
+					<li>留言板</li>
+					<li class="more">> </li>
+				</ul>
+				<div class="more-menu">
+					<div>我的资料</div>
+					<div>退出登录</div>
+				</div>
+			</nav> 
+		</header>
+		<article class="article">
+			<ul><!-- 有序列表 <ol> -->
+				<li>position</li>
+				<ul>
+					<li>position:static</li>
+						默认值.元素出现在正常的流中
+					<li>position:relative</li>
+						相对于其原来的位置定位,原来的所占的空间不变,会影响下方的元素
+					<li>position:absolute</li>
+						相对于 static 定位以外的第一个父元素进行定位
+					<li>position:fixed</li>
+						相对于浏览器窗口进行定位
+					<li>position:inherit</li>
+						规定应该从父元素继承 position 属性的值。
+					<li>position:initial</li>
+						设为默认值
+				</ul>
+				<li>visibility:hidden (visible)</li>
+					会把元素隐藏但依然占有空间
+				<li>display:none</li>
+					会把元素隐藏并且不占空间
+			</ul>
+		</article>
+		<div class="container">
+			<div class="header">块容器自动填充宽度</div> 
+			<div class="div-1">div-1 div-1 div-1 div-1 div-1 div-1 div-1 div-1 div-1</div> 
+			<div class="div-2">div-2 div-2 div-2 div-2 div-2 div-2 div-2 div-2 div-2</div>
+			<div class="div-3">div-3 div-3 div-3 div-3 div-3 div-3 div-3 div-3 div-3</div> 
+			<div class="footer">footer</div> 
+		</div>
+		<details open="open">
+			<summary>打开</summary>
+			这是隐藏的内容
+		</details>
+
+	</body>
+</html>
+

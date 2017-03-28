@@ -1,0 +1,67 @@
+.container{
+	background-color: grey;
+	margin-top: 20px;
+	position: relative;
+	top:20px;
+	float: left;
+	width: 60%;
+	/*clear:both;*/
+} 
+
+.header{
+	height: 50px;
+	width: 200px;
+}
+.footer{
+	height: 50px;
+}
+.div-1{
+	/*position: absolute inherit;*/
+	/*top:0px;*/
+	position: absolute;
+	/*float: left;*/
+	background-color: green;
+}
+
+.div-2{
+	float: right;
+	background-color: yellow;
+}
+
+.div-3{
+	background-color: red;
+	clear: both;
+	visibility: visible;/* hidden visible*/
+}
+
+nav ul {
+	text-align: center;
+}
+
+nav li ,.more-menu div{
+
+    display: inline;
+    background: #03A9F4;
+    padding: 10px 20px;
+    border: solid;
+    border-color: #b9f0f0;
+    cursor: pointer;
+}
+nav li:hover ,.more-menu div:hover{
+    background: #75b7eb;
+}
+
+.more-menu{
+	position: absolute;
+	display: none;
+}
+.more-menu div{
+	display: block;
+}
+.article{
+	width:40%;
+	float: left;
+}
+details{
+	clear:both;
+}
