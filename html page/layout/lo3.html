@@ -1,0 +1,56 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>绝对定位实现混合多列布局</title>
+	<style type="text/css">
+		.header{
+			background-color: pink;
+			height: 40px;
+		}
+		.main-body{
+			background-color: green;
+			height: 500px;
+			position: relative;
+			width: 100%;
+		}
+		.footer{
+			background-color: grey;
+			height: 40px;
+		}
+		.container{
+			width: 700px;
+			margin: 0 auto;
+		}	
+		.left{
+			background-color: red;
+			height: 500px;
+			width: 340px;
+		}
+		.right{
+			background-color: orange;
+			position: absolute;
+			top: 0px;
+			margin-left: 350px;
+			word-break: break-word;
+		}
+	</style>
+</head>
+<body>
+<!--
+	1.left 的高度要大于right,负责撑起父容器的高度
+	2.right随着内容自动向右填充
+	3.容器main-body要设置为相对布局，使right的绝对定位以父容器为标准
+-->
+<div class="container">
+	<div class="header">header</div>
+	<div class="main-body">
+		<div class="left">left</div>	
+		<div class="right">
+			rightrightrightrightrightrightrightrightrightrightrightrightrightrightright
+		</div>
+	</div>
+	<div class="footer">footer</div>
+</div>
+</body>
+</html>

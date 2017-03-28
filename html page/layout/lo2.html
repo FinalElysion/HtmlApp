@@ -1,0 +1,59 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Float实现混合多列布局</title>
+	<style type="text/css">
+		.header{
+			background-color: pink;
+			height: 40px;
+		}
+		.main-body{
+			background-color: green;
+			height: 500px;
+			width:100%;
+			overflow:hidden;
+		}
+		.footer{
+			background-color: grey;
+			height: 40px;
+			clear:both; 
+
+		}
+		.container{
+			width: 700px;
+			margin: 0 auto;
+		}	
+		.left{
+			background-color: red;
+			height: 700px;
+			float: left;
+			width: 340px;
+		}
+		.right{
+			background-color: orange;
+			height: 500px;
+			float: right;
+			width: 340px;
+		}
+	</style>
+</head>
+<body>
+	<!--
+		消除浮动影响 
+		1.(一般用于消除对后面的元素影响)clear:both  
+			参照main-body 子类浮动高度超出了父类
+		
+		2.(一般用于消除对父容器的影响)width:100%;overflow:hidden; 
+			参照（不存在main-body div时）footer right 对footer造成影响
+	-->
+<div class="container">
+	<div class="header">header</div>
+	<div class="main-body">
+		<div class="left">left</div>	
+		<div class="right">right</div>
+	</div>
+	<div class="footer">footer</div>
+</div>
+</body>
+</html>
